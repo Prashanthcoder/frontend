@@ -19,7 +19,7 @@
 
             const formData = new FormData();
             formData.append("file", file)
-            fetch("https://backend-oqae.onrender.com", {
+            fetch("https://backend-oqae.onrender.com/upload", {
                 method: "POST",
                 body: formData
             })
