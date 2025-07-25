@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title> AI Nutritionist - Image Upload 📷📸</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <p id="statusmessage"></p>
+    <h1>Uploading images to backend project 📸</h1>
+    <input type="file" id="fileInput" accept="image/*" capture="environment">
+    <button onclick="upload()"> Upload </button>
+    <script>
+        function upload() {
+            const fileInput = document.getElementById("fileInput");
+            const file = fileInput.files[0];
+
+            const formData = new FormData();
+            formData.append("file", file)
+            fetch("http://127.0.0.1:8000/upload", {
+                method: "POST",
+                body: formData
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log("uploaded:", data);
+                    document.getElementById("statusmessage").innerText =
+                        `${data.filename} has been successfully uploaded and the predicted image is ${data.prediction}`;
+                })
+                .catch(err => {
+                    console.error("Error:", err);
+                    document.getElementById("statusmessage").innerText = `upload failed please try later`;
+
+                });
+        }
+    </script>
+</body>
+
+</html>
